@@ -1,0 +1,26 @@
+package com.virtue.ui;
+
+import java.util.Scanner;
+
+public class SingleArray {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter no. of cells : ");
+		int n = scan.nextInt();
+		
+		int[] arr = new int[n];
+		
+		for(int i = 0; i < n; i++) {
+			System.out.print("Enter value : ");
+			arr[i] = scan.nextInt();
+		}
+		
+		for(int i = 0; i < n; i++) {
+			System.out.println(arr[i]);
+		}
+
+		scan.close();
+	}
+
+}

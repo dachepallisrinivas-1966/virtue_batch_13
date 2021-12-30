@@ -1,0 +1,18 @@
+package com.virtue.ui;
+
+import java.util.Arrays;
+
+public class SingleArray2 {
+
+	public static void main(String[] args) {
+		int[] arr = { 10, 20, 45, 34, 5 };
+		
+		Arrays.sort(arr);
+		
+		for(int data : arr) {
+			System.out.println(data);
+		}
+
+	}
+
+}
