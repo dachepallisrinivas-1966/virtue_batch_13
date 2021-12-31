@@ -1,0 +1,12 @@
+package com.virtue.ui;
+
+public class StringBuilderDemo {
+
+	public static void main(String[] args) {
+		StringBuilder sb = new StringBuilder("hello2");
+		System.out.println(sb.length());
+		System.out.println(sb.capacity());		// length+16
+		
+	}
+
+}

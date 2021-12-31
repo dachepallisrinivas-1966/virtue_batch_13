@@ -1,0 +1,21 @@
+package com.virtue.ui;
+
+public class FunctionDemo {
+
+	// function definition
+	static int factorial(int num) {				// num is formal parameter
+		int fact = 1, i;
+		for(i = num; i >= 2; i--) {
+			fact *= i;
+		}
+		return fact;
+	}
+	
+	
+	public static void main(String[] args) {
+		for(int i = 1; i <= 10; i++) {
+			System.out.println(i + "! = " + factorial(i));   // function calling - i is actual parameter
+		}
+	}
+
+}

@@ -1,0 +1,19 @@
+package com.virtue.ui;
+
+public class FunctionDemo {
+
+	int factorial(int num) {
+		int fact = 1, i;
+		for(i = num; i >= 2; i--) {
+			fact *= i;
+		}
+		return fact;
+	}
+	
+	public static void main(String[] args) {
+		
+		int result = factorial(5);
+		System.out.println(result);
+	}
+
+}

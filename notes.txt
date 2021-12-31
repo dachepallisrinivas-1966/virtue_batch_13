@@ -4,10 +4,14 @@ dachepallisrinivas@gmail.com
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------
+1) 30-dec-2021
+
+
 Softwares required:
 +	JDK 1.8
 +	Eclipse Enterprise Edition IDE
 +	Oracle 11g express edition
+
 
 
 
@@ -158,7 +162,8 @@ Java Tokens?
 	-	conditional operator :	(condition) ? true-statement : false-statement
 	-	increment/decrement :	++	--
 	-	special operators
-		;	[]
+		;	[]	
+		+	string concatenation
 		"instance of"	operator
 
 3	keywords (reserved words)
@@ -451,8 +456,208 @@ java.util.Arrays  class:
 5) deepEquals(darray-1, darray-2)
 6) deepToString(darray)
 
+
+								String class
+								-------------
+							     (java.lang package)
+
+java.lang 	►	default package
+			means it is imported automatcially for every program.
+
+			eg: String, System, Integer, Float, Double, Long, Boolean etc.,
+
+java.lang.String:
+-------------------
++	it is a pre-defined class
++	it is immutable (not modifiable)
+
+declare:
+--------
+
+1) String str;
+2) String str = "java";
+	         0123
+3) String str = new String();
+4) String str = new String("hello");
+
+methods:
+--------
+a) length()
+b) charAt(index)
+	str.charAt(0)		→	j
+c) indexOf(String)
+	str.indexOf("a");	→	1	(first occurance)
+d) lastIndexOf(String)
+	str.lastIndexOf("a")	→	3	(last occurance)
+e) substring(start_index_inclusive  [, end_index_exclusive])
+	str.substring(2,4)	→	va
+f) startsWith()	→	str.startsWith("ja")	→	true
+g) endsWith()	→	str.endsWith("va")	→	true
+h) contains()	→	str.contains("a")	→	true
+i) toUpperCase()	
+j) toLowerCase()
+k) concat()	→	to combine two string
+l) replace(old_char, new_char)
+m) trim()	→	remove both leading and trailing spaces.
+n) equals()
+o) equalsIgnoreCase()
+p) compareTo()	→	to compare two strings	→	return 0 if both are equal, +ve value if string1 is big, -ve value if string2 is big
+q) isEmpty()
+r) toCharArray()
+s) split(regex)
+
+		
+What is the difference between == and equals() ?
+
+what is the difference between equals() and compareTo() ?
+
+
+String str = "hello world";
+how do you display "world" out of it.
+
+
+what is the difference between the following statements?
+
+	String str1 = new String("hello");
+and	
+	String str3 = "hello";
+
+
+StringBuffer and StringBuilder:
+---------------------------------
+(java.lang)
++	peer classes of String class.
++	both are mutable (modifiable)
+
+
+what is the diiference between StringBuffer and StringBuilder?
+	StringBuffer is thread-safe.
+	StringBuilder is not thread-safe.
+
+methods:
+--------
+1) length()
+2) capacity()
+3) append(string)
+4) insert(index, string)
+5) replace(start index, end index, string)
+6) delete(start_index_inclusive, end_index_exclusive)
+7) reverse()
+
+
+
+								functions
+								---------
+recursive functions
+	calling a function being in itself.
+
+
+call-by-value
+	in case of primitive types, java follow call-by-value mechanism.
+	changes are not reflected back.
+
+call-by-reference
+	changes are reflected back.
+
+
+
+									OOPS
+							(Object Oriented Programming System)
+							------------------------------------
+
++	It is a programming paradigm (methodology)
+	- monolithic 		(eg:  BASIC, Assembly Language)
+	- procedure oriented	(eg:  COBOL)
+	- structured		(eg: 'C')
+	- object oriented	(eg: C++, Java, C#, Python, Ruby etc.,)
+
+
++	data is given importance than logic
++	simulate real world objects in the programming
+
+
+class:	it is a user-defined datatype that represent an entity in terms of properties (data members) and behaviours (methods)
+	it is a re-usable software component.
+	classes we are creating are also known as POJO (Plain Old Java Object), models, beans, entity class etc.,
+	no memory is allocated when we define a class.
+
+
+	datatype		var	=	value
+
+	int			x	=	45;
+	double			y	=	2.6;
+
+
+	eg: student, employee, person, account
 	
+object:		it is a run time instance of a class.
+		(it is a variable whose data type is class)
+		we have to use "new" keyword to create object for a class.
+
+		memory is allocated only when we create an object for this class.
+
+	datatype		var
+
+	student			s1	=	new	student();
+
+	(class)			(object)
+
+	employee		e1 	=	new 	employee();
+
+
+real world examples:
+-----------------------------
+Mobile class
+	properties	:	color, model, manufacturer				(data members)	
+	behaviours	:	calling(), browsing(), recording(), messaging()		(methods)
+
+
+Refrigerator
+	properties	:
+	behaviour	:
+TV
+	properties	:
+	behaviour	:
+
+Washing Machine
+	properties	:
+	behaviour	:
+
+
+
+advatnages of OOPS:
+--------------------
++	code reusability
++	security
+
+
+features of OOPS:
+------------------
+1) encapsulation	:	data hiding
+2) abstraction		:	behaviour hiding
+
+
+real world example:
+------------------------
+TV
+	data hiding	:	closing all components inside a sealed unit
+	encapsulation	:	providing some buttons/knobs to operate the TV.
+
+	abstraction	:	internal operations are hidden.
 	
+CAR
+	data hiding
+	encapsulation	:	providing steering, accelrator, break, clutch
+				(necessory components are exposed to drive the car)
+	abstraction	:	internal mechansism is hidden
+
+
+
+programs:
+---------
+7) matrix addition
+8) matrix multiplication
+9) matrix tranpose
 
 
 
@@ -461,5 +666,25 @@ java.util.Arrays  class:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
 
 
