@@ -1,20 +1,20 @@
-D.Srinivas
-dachepallisrinivas@gmail.com
-630 573 0633 
+--------------------------------------------------------------------------------------------------------------------------------------------
 
+D.Srinivas | dachepallisrinivas@gmail.com | 630 573 0633 (call/whatsapp)
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 1) 30-dec-2021
 
 
-Softwares required:
+Software links:
 +	JDK 1.8
+	https://www.oracle.com/in/java/technologies/javase/javase8u211-later-archive-downloads.html
+
 +	Eclipse Enterprise Edition IDE
+	https://www.eclipse.org/downloads/packages/release/neon/3/eclipse-ide-java-ee-developers
+
 +	Oracle 11g express edition
-
-
-
-
+	https://www.oracle.com/database/technologies/xe-prior-release-downloads.html
 
 
 
@@ -658,6 +658,320 @@ programs:
 7) matrix addition
 8) matrix multiplication
 9) matrix tranpose
+
+
+[3] 3-jan-2021
+
+varargs	(variable arguments):
+-----------------------------
+ellipsis ( ... ) symbol represent varargs.
+whenever we have this symbol, we can pass any number of arguments to the function as comma-seperated list.
+
+
+data member default values:
+-------------------------------
+int	►	0
+double	►	0.0
+String	►	null
+
+
+
+
+access specifiers:
+----------------------
+1) private	►	members can be used only within the class in which they are defined.
+			data members must be assigned always a private access. so that we can achieve "data hiding".
+
+2) public	►	members can be accessed either within the class or from outside the class.
+3) protected	►	members can be accessed either within the class or from any of it's sub class.
+4) default	►	members (data members and methods) can be used either within the class or from any other class
+			in the current package.
+
+
+setters and getters:
+---------------------
+setters are used to modify the value of the property.
+getters are used to retrieve the value of the property.
+setters and getters both are not mandatory.
+
+note:
+-----
++	data members are stored independently for each object
++	methods are stored in a special memory, and it can be accessed for all objects of the class.
+ 
+
+
+"this" reference:
+-----------------
++	it represent an implied object.
++	implied object means the object which is invoking a method currently.
+
+
+constructor:
+------------
++	it is a special method and is automatically called whenever an object is created.
++	it should have the same name as that of class.
++	it can take parameters also.
++	it cannot return any value,and should not have the return type as void.
++	a class can have many constructors. (constructor overloading)
+
+
++	it is used to initialize data members.
+
+
+
+Note:
+-----
++	if a class do not have any constructor, java insert a default constructor for every class.
++	but if a class contain atleast one constructor, java do not insert the default constructor on it's own.
+
+
+
+types of constructor:
+-----------------------
++	default constructor 	(no-parameter | no-argument constructor)
++	parameter constructor	(parameterized | parametric)
++	copy constructor
+
+copy constructor:
+-------------------
++	it is a special constructor that takes object of the same class passed as parameter to the constructor.
++	it is used to inialize an object with another existing object.
+
+
+static:
+-------
+static means "sharable".
+
+static:
+-------
+it can be used in 4 ways.
+a) static data members	(class variables)
+	-	to store data which is common to all objects of the class.
+
+	class	Product {
+		private int productId;
+		private String name;
+
+		private static int tax;
+	}
+
+b) static methods
+	-	they do not need any object to call.
+	-	it can be called directly with the class name.
+	-	allow only static data members or other static methods.
+
+
+	
+c) static block
+	-	block is a group of statements enclosed within curly braces.
+	-	it is the first code block that is executed in the program.
+	-	it is executed automatically 
+		-	whenever a static method is called
+		-	whenever a static data member is accessed
+
+	can we have multiple static blocks?
+	-	we can have multiple static blocks.
+
+d) static class
+	-	we can use static keyword on inner class.
+
+
+what are the legal access specifier for a class?
+	public, default
+	static	►	only for inner class
+
+class A {
+
+	static class B {
+
+	}
+}
+
+
+Can I overload static methods?
++	YES
+
+class Test {
+	public static void show(int x) {
+		System.out.println(x);
+	}
+
+	public static void show(double x) {
+		System.out.println(x);	
+	}
+}
+
+class TestApp {
+	public static void main(String[] args) {
+		Test.show(100);
+		Test.show(5.6);
+	}
+}
+
+
+
+inheritance:
+------------
++	creating a new class (sub class) from an existing class (super class)
++	sub class can use all the features of super class as well as any extra features that are added to it.
++	using "extends" keyword we can achieve this
++	it represent an "is-A" relationship
++	it is mainly for code reusability.
+
+types of inheritance:
+----------------------
++	simple (single)
++	hierarchical
++	multi-level
+
++	multiple inheritance is not supported in java. to acheive this, we have to use interfaces.
+
+	
+super:
+-------
++	super is used to access super class data members or super class methods from sub class.
+		super.dataMember
+		super.method(arg-1, arg-2, ...)
+
++	super is also used to call super class constructor from sub class constructor.
+		super(arg-1, arg-2, ...)
+	if used, super() call must be the first statement in the code block.
+
+
+
+what is the difference between method overloading and method overriding?
+
+method overloading:
+--------------------
+when two methods have the same name but with different parameter list.
+
+method overriding:
+-------------------
+when a sub class contain a method that has same signature as that of another method in it's super class then the sub class method is said to be
+overriding.
+
+it is a best practice to use "@Override" annotation on overrided methods.
+it is optional.
+But if used, if the overriding is not done properly, compiler will give an error.
+
+
+method signature	=	 method name + parameter list
+
+
+class Test {
+
+	public void show(int x) {
+		System.out.println(x);
+	}
+
+	public void show(double x) {			// overloading
+		System.out.println(x);
+	}
+}
+
+class TestSub   extends  Test {
+	@Override
+	public void show(int x) {			// overriding		
+		x++;
+		System.out.println(x);
+	}
+}
+
+
+java.lang.Object	class
+------------------------------
++	it is universal super class (cosmic class)
++	every class in java, whether it is pre-defined or user-defined, they are inherited from java.lang.Object class.
+
+
+
+methods:
+--------
+1) public String toString()
+
+
+
+				person(name, age)
+				
+			
+	Employee	(salary)			Student		(fee)
+
+	Manager		(bonus)
+
+
+note:
++	whenever a sub class object is created, super class constructor(s) are called first , then the sub class constructor is called.
+
+
+constructor phenomenon:
+-----------------------
+	class  A {
+		public A() {
+			System.out.println("A - constructor");
+		}
+
+	}
+
+	class	B	extends  A {
+
+		public B() {
+			System.out.println("B - constructor");
+		}
+	}
+
+
+	class  Test {
+		public static void main(String[] args) {
+			B  obj = new B();
+		}
+	}
+
+
+output:
+-------
+A - constructor
+B - constructor
+
+
+-------------------------------------------
+
+
+	class	A {
+		public A(int x) {
+			System.out.println("A - value of x = " + x);
+		}
+
+	}
+
+	class	B extends  A {
+		public B(int y) {
+			System.out.println("B - value of y = " + y);
+		}
+	}
+
+	class Test {
+		public static void main(String[] args) {
+			B obj = new B(200);
+		}
+	}
+
+output:
+--------
+	???
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
