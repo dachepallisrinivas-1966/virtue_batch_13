@@ -660,7 +660,7 @@ programs:
 9) matrix tranpose
 
 
-[3] 3-jan-2021
+[3] 3-jan-2022
 
 varargs	(variable arguments):
 -----------------------------
@@ -900,9 +900,6 @@ methods:
 	Manager		(bonus)
 
 
-note:
-+	whenever a sub class object is created, super class constructor(s) are called first , then the sub class constructor is called.
-
 
 constructor phenomenon:
 -----------------------
@@ -959,6 +956,487 @@ B - constructor
 output:
 --------
 	???
+
+
+[4] 4-jan-2022
+
+
++	when an object is created, the constructor of that class is called.
+
++	when an object of sub class is created, super class constructor is called first and 
+    	then the sub class constructor is called. This hold true for any levels of inheritance.
+
+	when a sub class object is created with
+
+	i) default constructor		then the super class default constructor is called.
+	ii) parameter constructor	then the super class default constructor is called.
+	iii) copy constructor		then the super class default constructor is called.
+
+"super" keyword:	("super" reference)
+----------------------------------------------------
+	1) it is used to call the constructor of super class from the constructor of sub class.
+	2) This is used exclusively call a parameter constructor or copy constructor of the 
+        super class from sub class constructor.
+	3) if super() has to be used, it must be the first statement in the code block.
+	4) this() and super() cannot be used at a time.	(mutually exclusive)
+	5) "super" keyword can be used to call an overriding function of super class in the sub class.
+
+
+class	A {
+	public A() {
+		System.out.println("A - constructor");
+	}
+
+	public A(int x) {
+		this();			// calling default constructor
+		System.out.println("A - parameter constructor with x = " + x);
+	}
+}
+
+class Test {
+	public static void main(String[] args) {
+		A  obj = new A(100);
+	}
+}
+
+output:
+-------
+A - constructor
+A - paramter constructor with x = 100
+
+
+
+Abstract Polymorphism	(Abstraction)
+---------------------------------------------------------
+abstract means "incomplete or unclear". It is an idea but we don't know how to implement.
+abstraction means "behaviour hiding".
+abstraction is "disclosing only required details and hiding the background implementation".
+
+abstract class:
+--------------------
+	It is a class which should not have objects allocated.
+
+	In this scenario, we never need to create an object for Person.
+        so, Person class can be declared as an abstract.
+
+	to make a class abstract, it must be defined with an "abstract" keyword.
+	we cannot instantiate (create an object) an abstract class.
+
+abstract method:
+----------------------
+	It is a method which do not have any implementation (i.e., definition)
+
+   	
+	1) an abstract method must be written only inside an abstract class.
+	2) but an abstract class need not contain any abstract method.
+	3) all sub classes of abstract class, must implement (override) all abstract methods. 
+       	4) if not, the sub class must also be marked as "abstract".
+
+abstract class A {
+    abstract void show();
+}
+
+class B extends A {
+    @Override
+    protected void show() {               
+        System.out.println("B");
+    }
+}
+
+class Test {
+    public static void main(String [] args) {
+        B obj = new B();
+        obj.show();
+    }
+}
+
+error:
+    cannot reduce the visibility of the inherited method.
+
+
+private	► protected ► default ► public
+
+
+
+polymorphism:
+	poly means many
+	morph means forms
+
+	exhibiting different behaviours for a same method call.
+
+	move()	is known as polymorphic.				
+
+	man	►	move()	►	walk
+	fish	►	move()	►	swim
+	bird	►	move()	►	fly
+	snake	►	move()	►	crawl
+
+
+	polymorphism
+	+	compile-time polymorphism	(early binding)
+		eg: method overloading
+
+	+	run-time polymorphism		(late binding)
+		eg: method overriding
+
+note:
+-----
+	we can store object of a sub class in a super class reference variable.
+
+
+
+Type Casting:
+-------------
+	Converting one datatype to another.
+
+	2 types.
+
+	a) Broadening	(promotion)		implicit
+	b) Narrowing	(demotion)		explicit
+
+
+	primitive types:
+	-------------------
+	a) broadening:
+	    -----------------
+	int x = 45;
+	double d = x;		(implicit)	- broadening
+
+	double d2 = 67;		// OK
+	int y = '@';		// OK
+
+	char -> int -> double
+
+	a) narrowing: (explicit):
+	------------------------------
+	int x = 45.0;		// error
+	int x = (int)45.0;		// OK
+
+	char ch = (char)156;	// OK
+
+
+Referencing:
+------------
+       					     Employee
+			                        |
+            	-----------------------------------------------------------------
+	        |					                        |
+              Manager				                	ContractEmployee
+	        |
+       Managing Director
+
+
+eg:
+	Employee emp1 = new Employee();	
+	Employee emp2 = new Manager();
+	Employee emp3 = new ContractEmployee();	
+	Employee emp4 = new ManagingDirector();
+	Manager m2 = new ManagingDirector();	
+
+
+	Manager m3 = new ContractEmployee();			// NP
+	ContractEmployee ce = new Employee();			// NP
+
+
+
+	user-defined data types:
+	-----------------------------------------
+	ContractEmployee ce2 = emp3;				// NP		
+
+	ContractEmployee ce2 = (ContractEmployee)emp3	
+	
+
+	Manager m1 = (Manager)emp2;			
+	Manager m2 = (Manager)emp3;			
+	Manager m3 = (Manager)emp4;	
+
+
+final keyword:
+------------------
+1) final class : it cannot be inherited.
+2) final method : it cannot be overridden.
+3) final variable : value of which cannot be modified. (constant)
+
+what is the opposite keyword of final?
+
+	???
+
+
+interface:
+----------
++	It is a user-defined datatype but contain only public abstract methods and public static final variables.	(upto JDK 1.7)
++	It is mainly used to achieve multiple inheritance.
++	We can acheive 100% abstraction.
+
++	we cannot create object for an interface.
++	create a sub class (using implements keyword) and override all the abstract methods then create object for the sub class and use it.
+
+
+class		►	extends		►	sub class
+interface	►	implements	►	sub class
+interface	►	extends		►	sub interface
+
+class		►	NOT POSSIBLE 	►	sub interface
+
+eg-1:
+------
+
+interface   B {
+
+}
+
+interface   C {
+
+}
+class	A	implements	B, C {
+
+}
+
+
+eg-2:
+-----
+class	X {
+
+}
+
+interface  Y {
+
+}
+
+class	Z   extends  X   implements  Y {
+
+}
+
+	
+
+ 								Built-In Packages
+						                ------------------
+                                        			(Java SE Libraries)
+
+java.lang			(default package - because it is imported for every program)
+	Object          
+	System
+	Math
+	String
+	StringBuffer
+	StringBuilder
+	Exception
+	Throwable interface
+	Runnable interface
+	Thread
+	Wrapper classes - Integer, Double, Float, Long, Boolean
+
+
+java.util
+    Scanner
+    Date        (deprecated)
+    Calendar    (deprecated)
+
+java.io
+    BufferedReader	
+
+
+1) java.lang.System class:
+   -------------------------------
+
+	class variables			              	object
+	-------------------				---------
+	public static java.io.InputStream		in
+	public static java.io.PrintStream		out
+	public static java.io.PrintStream		err
+
+	System.in	carries signal from keyboard to VDU.
+	System.out, System.err carries signal directly to VDU.
+
+
+	methods:
+	------------
+	public static void gc();		request for garbage collection.
+	public static void exit(int)		terminates the program then and there. int could be either a 0 or 1.
+    
+
+
+2) java.lang.Math
+-------------------
+	public static fields:
+	------------------------
+		E, PI
+    	
+	public static methods
+	----------------------------
+		double pow()
+		double sin(angle in radians)
+            	Math.sin(30)    =>  ???
+            	Math.sin(Math.toRadians(30))    =>  0.5
+
+        	double cos(angle in radians)
+		double sqrt()
+
+		ceil() : return next integer
+            	Math.ceil(11.2) => 12
+		floor() : return previous integer
+            	Math.floor(11.9) => 11
+		round() 
+            	Math.round(11.2) =>  11
+            	Math.round(11.9) =>  12
+
+		abs()
+		toRadians()
+		toDegrees()
+
+
+
+Boxing:
+    converting primitive variable into a wrapper object
+
+    int x = 89;
+    Integer iobj = x;   // auto-boxing
+
+unBoxing:
+    converting wrapper object back into primitive variable
+ 
+    Integer iobj = new Integer(109);
+    int x = iobj; 	// auto-unboxing
+
+
+static import: (JDK 1.5)
+------------------------
+    java.lang.Math class provide static methods.
+        sqrt()
+        abs()
+        pow()
+
+    int a, b;
+    double hypotenuse = Math.sqrt(Math.pow(a,2) + Math.pow(b,2));
+
+    (or)
+    import static java.lang.Math.sqrt;
+    import static java.lang.Math.pow;
+
+    double hypotenuse = sqrt(pow(a,2) + pow(b,2));
+
+
+    import java.util.Scanner;       // recommended
+    import java.util.*;             // bad coding practice
+
+
+
+	
+
+								Exception Handling
+								------------------
+
+Exception is an object that represents a situation where the application broke down.
+Every Exception is a pre-defined class in Java.
+
+
+
+   		java.lang.Throwable (i)
+                        |
+                        |
+            ---------------------------------
+            |                               |
+            java.lang.Error         java.lang.Exception
+                                            |
+                                            |
+                                    java.lang.RuntimeException
+
+
+
+Exception classes that are derived from java.lang.RuntimeException class - UNCHECKED
+unchecked exceptions are not informed by the compiler.
+
+All other are  								 - CHECKED
+
+
+try, catch, finally
+throw, throws
+
+	
+	1) try : contain the code where the exception can be generated.
+    	2) catch : contain statements that are to be executed when the specified exception occurred in the correspoding try block
+        3) finally : contain the code to be executed whether an exception or occurred or not.  
+
+            the most relevant exception classes mention first.
+            least relevant exception mention next.
+
+    a try block must follow an immediate catch block (or) a finally block.
+
+            try {				try {
+                ..					...
+            } finally {				} catch(ExceptionClassName excep) {
+                ...					...
+            }					}
+
+    a try can have many catch blocks.
+    a try block can have another try block within it.
+
+    
+note:
+-----
++	we are not supposed to handle UnChecked Exceptions
+        we have to avoid these exceptions using a technique called "Defensive programming".
+
+
++	if you do not handle checked exceptions, the compiler will give errors.
++	checked exceptions must be handled, they cannot be avoided.
+
+
+
+User Defined Exceptions:
+------------------------
+1. create a class which should be derived from java.lang.Exception or java.lang.RuntimeException
+2. write a constructor that takes a String parameter.
+3. call the super class constructor by passing this String to it.
+
+
+4. in the app,
+	enclose the problamatic code inside a try block.
+	raise the user defined exception using "throw" keyword.
+	handle the user defined exception in the corresponding catch block.
+
+throw keyword:
+--------------
++	to raise an exception
+
+throws keyword:
+----------------
++	delegating the exception handling responsibility to the caller of the method.
+
+
+JDK 7 Enhancements:
+---------------------------------
+a) multi-catch exception
+
+    try {
+	    statement(s)
+    } catch (Exception-1   |  Exception-2  |  Exception-3    obj) {
+	    statement(s)
+    }
+
+
+b) try-with-resources
+
+    try (declare closable resourceses here....){
+                    ........................
+    } catch(....){
+
+    }
+
+    the closable resource will be close automatically.
+
+    a Resource has to implement java.lang.Closable interface
+    to be recognized as closable.
+
+
+
+
+
+
+
+
+
+
 
 
 

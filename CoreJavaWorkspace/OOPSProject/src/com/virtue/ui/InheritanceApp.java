@@ -8,8 +8,8 @@ import com.virtue.model.Student;
 public class InheritanceApp {
 
 	public static void main(String[] args) {
-		Person person = new Person("harika", 21);
-		System.out.println(person);
+		// Person person = new Person("harika", 21);
+		//System.out.println(person);
 		// System.out.println(person.toString());			// fully qualified name + @ + hashcode in hexa decimal form
 		// System.out.println(person.hashCode());			// hashcode in decimal form
 
