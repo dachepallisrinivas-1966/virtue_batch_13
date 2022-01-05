@@ -1429,23 +1429,145 @@ b) try-with-resources
     to be recognized as closable.
 
 
+[5] 5-jan-2022
+
+
+ 								Generics
+							        --------
+These are called as ADT	(abstract data types)
+
+when there is a logic which is indepedent of datatypes, then we can use ADT. 
+eg: Sorting on int's, float's, double's or char's are same.
+
+generics are implemented using angular brackes. < >. The imaginary datatype is represented as T. 
+eg: <T>.
+if we have two imaginary datatypes then <T1, T2>
+
+generics do not support primitive types.
+T can be Book, Car, ComplexNumber, Employee etc.,
+but not with int, char, float, double.
+if it is inevitable, we may use Wrapper classes.
+
+1) generic methods
+
+	public void sort(T[] arr) {
+		// logic goes here ...
+	}
+
+
+2) generic classes
+
+class  Test<T> {
+	private:
+		T   data;
+	}
+}
 
 
 
+								Collection API   (java.util)
+								----------------------------
+								(Collection Framework)
+API	►	Application Programming Interface
+
+It is a collection of interfaces, abstract classes.
+Java provided implementation classes also for Collection API.
+
+
+Collections are divided into 3 parts:
+a) declarations
+b) implementations
+c) algorithims
 
 
 
+                               << Collection API Diagram >>
+
+List
++	allow duplicate items
++	index-based operations are possible
++	nulls are allowed
+
+
+	+	ArrayList
+		-	is best when traversal is done more
+		-	insertions and deletions are less
+		-	internally use an expandable array
+		-	it is not thread-safe
+
+			add(), remove(), set(), size(), get(), iterator()
+			clear(), isEmpty()
+
+		what is the default capacity of an array list?
+			10
+
+		when we are trying to add 11 the element, the capacity is increased.
+			newCapacity += oldCapacity + (oldCapacity >> 1)
+	
+		capacity is increased by 50%.
+	
+
+	+	LinkedList
+		-	is best when insertions and deletions are frequently done.
+		-	internally use a double-linked list.
+
+			descendingIterator()
+			
+	
+	+	Vector		(legacy class)
 
 
 
+what is difference between iterator and list iterator?
+
+how do you compare two arraylists whether they are equal or not?
+
+what is the difference between arraylist and vector?
++	vector is a legacy class
++	it is a thread-safe (synchronized)
++	the default capacity for vector is 10.
++	the capacity is increased by 100%.
 
 
 
+Set
++	do not allow duplicates
++	no index based operations are possible
 
 
+	+ HashSet		:	uncertain order
+	+ LinkedHashSet		:	insertion order
+	+ TreeSet		:	sorted order
 
 
+java.util.Collections class:
+-------------------------------
+	a) sort(arrayList)
+	b) binarySearch()
+	c) fill()
 
+	
+
+java.util.Comparable interface:
+---------------------------------
+	Employee class should be inherited from Comparable interface.
+	
+	public int compareTo(Employee o) {
+		// logic goes here ..
+	}
+
+
+java.util.Comparator interface:	
+--------------------------------
+	Without disturbing the Employee class, other programmers can create their own comparators.
+
+
+	public int compare(Employee o1, Employee o2) {
+		// logic goes here ..
+	}
+
+what is the difference between Comparable and Comparator?
+---------------------------------------------------------
 
 
 

@@ -4,4 +4,7 @@
     <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="com.virtue.model.ComplexNumber"/>
     <fullyQualifiedTypeName name="com.virtue.model.Product"/>
+    <fullyQualifiedTypeName name="com.virtue.model.Rectangle"/>
+    <fullyQualifiedTypeName name="com.virtue.model.Shape"/>
+    <fullyQualifiedTypeName name="com.virtue.exception.InsufficientBalanceException"/>
 </qualifiedTypeNameHistroy>
