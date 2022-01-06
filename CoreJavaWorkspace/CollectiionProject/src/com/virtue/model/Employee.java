@@ -52,6 +52,21 @@ public class Employee { // implements Comparable<Employee> {
 		
 //		return empName.compareTo(o.empName);
 //	}
+	
+	
+	@Override
+	public int hashCode() {
+		return empId;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		boolean result = false;
+		Employee other = (Employee) o;
+		if (empId == other.empId && empName.equals(other.empName) && salary == other.salary)
+			result = true;
+		return result;
+	}
 
 	
 

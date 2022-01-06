@@ -20,6 +20,8 @@ Software links:
 
 
 
+
+
 									Core Java
 									----------
 
@@ -45,6 +47,8 @@ Features of Java:
 +	simple
 +	high performance
 +	distributed
++	persistence	(using IOStreams)
+
 
 1) platform independent?
 +	here platform means O/S.
@@ -889,6 +893,11 @@ java.lang.Object	class
 methods:
 --------
 1) public String toString()
+2) public boolean equals(Object o)
+3) public Object clone()
+4) public int hashCode()
+5) protected void finalize() throws Throwable 
+
 
 
 
@@ -1566,8 +1575,310 @@ java.util.Comparator interface:
 		// logic goes here ..
 	}
 
+
 what is the difference between Comparable and Comparator?
 ---------------------------------------------------------
+
+		Comparable									Comparator
+		----------									----------
+1) Comparable provides a single sorting sequence. In other words, 		The Comparator provides multiple sorting sequences. 
+   we can sort the collection on the basis of a single element 			In other words, we can sort the collection on the basis
+   such as id, name, and price.	 						of multiple elements such as id, name, and price etc.
+
+2) Comparable affects the original class, i.e., the actual class 		Comparator doesn't affect the original class, i.e., the 
+   is modified.	  								actual class is not modified.
+
+3) Comparable provides compareTo() method to sort elements.			Comparator provides compare() method to sort elements.
+
+4) Comparable is present in java.lang package.					A Comparator is present in the java.util package.
+
+5) We can sort the list elements of Comparable type by 				We can sort the list elements of Comparator type by 
+   Collections.sort(List) method.						Collections.sort(List, Comparator) method.
+
+
+
+
+[6] 6-Jan-2021
+
+
+								Object Cloning
+								--------------
+
+The clone() method of java.lang.Object class creates a shallow copy of the object.
+
+Here, the shallow copy means it creates a new object and copy all the fields and methods associated with the object.
+
+The class should be inherited from Cloneable interface.
+we have to override clone() method.
+
+
+
+what is the difference between final, finally and finalize()?
+
+	
++	finalize() is the method of Object class. 
++	This method is automatically called just before an object is garbage collected. 
++	finalize() method overrides to dispose system resources, perform clean-up activities and minimize memory leaks.
+
+
+what is the contract between equals() and hashCode() ?
+
+	when two objects are equal as per equals() method, the hash codes must be same.
+	but the vice versa is not true.
+
+	when ever you override equals() method, make sure that hashCode() is also override.
+
+
+
+						Collection Part - 2
+						--------------------
+Map interface
++	it is used to store key-value pair of data.
++	key cannot be duplicated.
++	value can be duplicated.
+
+
+
++	HashMap		:	uncertain order
++	LinkedHashMap	:	insertion order
++	TreeMap		:	sorted order of key
+
+
+put(key, value), get(key), keySet(), values(), containsKey(), containsValue()
+entrySet()
+
+Entry	►	key and value together.
+
+
+
+
+						IOStream (java.io)
+						------------------
+stream : flow of data.
+
+iostreams are used to store the data permanantly (in the form of files)
+
+two types:
+1) text stream	(character stream)
+	-	to store any kind of information
+
+
+	Reader
+		FileReader
+		BufferedReader
+	Writer
+		FileWriter
+		PrintWriter
+
+2) binary stream (byte stream)
+	-	to store objects, audio, video, image
+
+	InputStream
+		FileInputStream
+		ObjectInputStream
+	OutputStream
+		FileOutputStream
+		ObjectOutputStream
+
+serialization	:	storing (writing) object into a file
+			the class should implement java.io.Serializable interface.
+			Serializable interface is called as a null interface or marker interface (no methods to override)
+
+			writeObject()
+
+de-serialization :	reading object from a file.
+			
+			readObject()
+
+
+
+
+
+								SQL
+								---
+							(Structured Query Language)
+RDBMS	(Relational Database Management Systems)
+----------------------------------------------------
+eg:	Oracle, MySQL, Postgre SQL
+	MS SQL Server, SQLite
+
+
+SQL Commands:
+---------------
++	DDL		(CREATE | ALTER | DROP | TRUNCATE | RENAME)
++	DML		(INSERT | UPDATE | DELETE)
++	DCL		(GRANT | REVOKE)
++	TCL		(COMMIT | ROLLBACK | SAVEPOINT)
++	DQL / DRL	(SELECT)
+
+
+SQL Datatypes:
+--------------
+CHAR, VARCHAR, VARCHAR2, NUMBER, DATE
+LONG, RAW, LONG RAW
+CLOB  (Chacter Large Object), BLOB	(Binary Large Object)
+
+
+What is the difference between Char and Varchar?
++	CHAR	-	fixed length, space padded
+			max. is 2000
+
++	VARCHAR	-	varying length
+			max. is 4000
+
+
+char(10)	►	UMA......	►	10 bytes
+varchar(10)	►	UMA		►	3  bytes
+
+
+What is the difference between varchar and varchar2?
++	they are same.
+
+
+What is normalization?
+----------------------
+It is the process of remove data redundancy and data inconsistency.
+
+
+1 NF	:	no multi-valued columns
+		identify the primary key column
+2 NF
+3 NF
+
+4 NF
+5 NF
+BCNF
+
+Integrity Constraints:
+----------------------
+These are conditions that are automatically verified by oracle server everytime you insert/update/delete data in a table.
+
++	NOT NULL
++	UNIQUE
++	CHECK (condition)
++	PRIMARY KEY
++	FOREIGN KEY	(REFERENCES)
+
+
++	DEFAULT
+
+
+Primary Key:
++	It is used to identify each row uniquely in a table.
++	cannot be null
++	cannot be duplicated
++	a table can have only one primary key.
+
+
+Foreign Key:
++	to establish relation from child table to parent table.
++	can be null
++	can be duplicated
++	a table can have more than one foreign key
++	every foreign key must be defined as a primary key or a unique key in the parent table.
+
+
+CREATE   TABLE   dept
+(deptno   number(3)   primary key,
+ dname	  varchar2(20)
+);
+
+deptno = 10, dname = sales
+
+INSERT  INTO  dept  VALUES  (10, 'sales');
+INSERT  INTO  dept  VALUES  (20, 'purchase');
+
+
+
+CREATE   TABLE   emp
+(empno   number(3)    primary key,
+ ename   varchar2(20),
+ doj     date,
+ salary  number(7,2)   check (salary >= 10000),
+ deptno  number(3)  references dept(deptno)
+);
+
+empno = 101, ename = ramesh,  doj = 5 january 2022, salary 15000, deptno 10
+
+
+INSERT  INTO  emp   VALUES  (101, 'ramesh', '5-jan-2022' , 15000, 10);
+INSERT  INTO  emp   VALUES  (102, 'harkia', '4-jan-2022' , 17000, 10);
+INSERT  INTO  emp   VALUES  (103, 'sreetu', '3-jan-2022' , 27000, 10);
+INSERT  INTO  emp   VALUES  (104, 'lakshmi', '3-jan-2022' , 24000, 30);
+
+
+UPDATE  emp   SET   salary = 17000  WHERE  empno = 101;
+
+DELETE  FROM  emp   WHERE   empno = 104;
+
+DELETE  FROM  emp   WHERE   doj = '3-jan-2022';
+
+
+
+
+location	v	30
+
+
+ALTER   TABLE   dept  ADD  location   varchar2(30);
+ALTER   TABLE   emp   MODFIY  ename  varchar2(15);
+ALTER   TABLE   emp   ADD  desg  varchar2(15);
+
+ALTER   TABLE   dept  DROP  COLUMN location;
+
+ALTER   TABLE   emp   DROP   (desg, doj);
+
+ALTER   TABLE   emp   DROP  primary key;
+
+
+
+Write a command to add a foreign key to an existing table?
+How do you remove a foreign key?
+How do you assign a check constraint for an existing table?
+
+
+DELETE FROM dept;
+TRUNCATE  TABLE  dept;
+
+what is the difference between DELETE and TRUNCATE?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2,7 +2,6 @@ package com.virtue.ui;
 
 import com.virtue.model.Employee;
 import com.virtue.model.Manager;
-import com.virtue.model.Person;
 import com.virtue.model.Student;
 
 public class InheritanceApp {
