@@ -16,6 +16,12 @@ Software links:
 +	Oracle 11g express edition
 	https://www.oracle.com/database/technologies/xe-prior-release-downloads.html
 
++	SQL Developer tool
+	https://www.oracle.com/tools/downloads/sqldev-downloads.html
+	download windows 32-bit/64-bit
+
+
+
 
 
 
@@ -1702,6 +1708,13 @@ RDBMS	(Relational Database Management Systems)
 eg:	Oracle, MySQL, Postgre SQL
 	MS SQL Server, SQLite
 
+SQL:
+----
++	it is a non-procedural language
++	it is case insensitive
++	clauses must be written in different lines for readability.
+
+
 
 SQL Commands:
 ---------------
@@ -1840,6 +1853,439 @@ DELETE FROM dept;
 TRUNCATE  TABLE  dept;
 
 what is the difference between DELETE and TRUNCATE?
+
+
+[7] 7-jan-2022
+
+SELECT:
+-------
+	to retrieve from a table.
+	we can perform all the following relational algebra operations using SELECT command.
+
+
+relational algebra operations:
+------------------------------
++	projection		(selecting few columns)
++	restriction 		(seleting few rows)
++	product
++	join
++	union
++	intersection
++	difference (minus)
+
+
+syntax:
+-------
+SELECT	columnlist/*
+FROM	tablename;
+
+we can perform the following operations using SELECT command.
++	arithmetic expressions
++	column aliases		(should be enclosed within double quotes)
++	concatenated columns
++	literals		(should be enclosed within single quotes)
+
+
+1) display monthly salary of all employees.
+
+SELECT employee_id, first_name, salary, commission_pct, salary+(salary*commission_pct) 
+FROM employees;
+
+
+what is null?
++	when a column lack it's value then it is said to be null.
++	a null is not same as ZERO.
++	it is either unassigned, undetermined or unpredicted.
++	if any arithmetic operation is performed with null value, it leads to null result.
+
+how to handle null values?
++	using NVL() library function
+
++	syntax:
+		NVL(col/expr, non-null-value)
+
+
+2) SELECT employee_id, first_name, salary, commission_pct, salary+(salary*NVL(commission_pct, 0)) 
+FROM employees;
+
+
+3) SELECT employee_id, first_name, salary, commission_pct, salary+(salary*NVL(commission_pct, 0)) AS "Monthly Salary" 
+FROM employees;
+
+
+4) display the full name of all employees.
+	
+SELECT   employee_id, first_name || last_name AS "Employee Name"
+FROM     employees;
+
+
+5) display the full name of all employees.
+
+SELECT   employee_id, first_name || ' ' || last_name AS "Employee Name", salary+salary*nvl(commission_pct,0) AS "Monthly Salary"
+FROM     employees;
+
+
+WHERE clause:
+--------------
+	to filter the rows based on a criteria.
+
+syntax:
+-------
+SELECT		columnlist/*
+FROM		tablename
+[WHERE		condition;]
+
+
+operators:
+---------
+1) arithmetic operators	:	+	-	*	/
+2) relational operators	:	>	<	=	>=	<=	!=  (or)  <>
+3) logical operators	:	and	or	not
+4) string concatenation opertors:	||
+5) SQL operators
+	a) BETWEEN	value-1  AND  value-2
+	b) IN	(value-1, value-2, ...)
+	c) LIKE	  'character pattern'
+		i) %		replace 0 or more unknown characters
+		ii) _		replace a single unknown character.
+	d) IS  NULL
+6) Negation Opeators
+	a) NOT  BETWEEN	value-1  AND  value-2
+	b) NOT  IN	(value-1, value-2, ...)
+	c) NOT  LIKE	  'character pattern'
+		i) %		replace 0 or more unknown characters
+		ii) _		replace a single unknown character.
+	d) IS  NOT NULL
+	
+
+
+
+6) display all employees who are working in department 50.
+
+SELECT   first_name, department_id 
+FROM   employees
+WHERE  department_id = 50;
+
+7) display all employees who earn salary is more than 15000.
+
+SELECT   first_name, salary
+FROM     employees
+WHERE    salary > 15000;
+
+8) display the details of Peter.
+
+SELECT   employee_id, first_name, salary, commission_pct
+FROM   employees
+WHERE  first_name = 'Peter';
+
+
+9) display all employees who are working in department 50 and earn salary more than 6000.
+
+SELECT  employee_id, first_name, department_id, salary
+FROM    employees
+WHERE   department_id = 50
+AND     salary > 6000;
+
+
+10) display all employees who are either sales managers or earn salary less than 10000.
+
+SELECT  employee_id, first_name, salary, job_id
+FROM    employees
+WHERE   job_id = 'SA_MAN' 
+OR      salary < 10000;
+
+
+11) display all employees except sales representatives.
+
+SELECT  employee_id, first_name, job_id
+FROM    employees
+WHERE   job_id <> 'SA_REP';
+
+(or)
+
+...
+...
+...
+
+
+12) display all employees who were hired on or before 15 nov 2004.
+
+SELECT  employee_id, first_name, hire_date
+FROM  employees
+WHERE  hire_date <= '15-nov-2004';
+
+
+13) display all employees who are working in department id 50 and who joined in the year 2005.
+
+SELECT  employee_id, first_name, department_id, hire_date
+FROM    employees
+WHERE   department_id = 50
+AND     hire_date >= '01-jan-2005' 
+AND     hire_date <= '31-dec-2005';
+
+(or)
+
+
+SELECT  employee_id, first_name, department_id, hire_date
+FROM    employees
+WHERE   department_id = 50
+AND     hire_date BETWEEN  '01-jan-2005'  AND  '31-dec-2005';
+
+
+
+
+
+
+15) display all employees who are working department 10, 50, 70 and 90.
+
+SELECT  employee_id, first_name, department_id
+FROM    employees
+WHERE   department_id IN  (10,50,70,90);
+
+
+(or)
+
+.....
+
+16) display all employees whose first name begin with alphabet 'S'.
+
+SELECT   employee_id, first_name
+FROM     employees
+WHERE    first_name like 'S%';
+
+
+17) display all employees whose first name end with alphabet 'n'.
+
+SELECT   employee_id, first_name
+FROM     employees
+WHERE    first_name like '%n';
+
+18) display all employees whose first name contain alphabet 'n'.
+
+SELECT   employee_id, first_name
+FROM     employees
+WHERE    first_name like '%n%';
+
+
+19) display all employees whose first name contain second character as alphabet 'o'.
+
+
+SELECT   employee_id, first_name
+FROM     employees
+WHERE    first_name like '_o%';
+
+
+20) display all employees who were hired in the month of April in any year.
+
+SELECT   employee_id, first_name, hire_date
+FROM     employees
+WHERE    hire_date like '%APR%';
+
+
+
+
+21) display all employees who do not earn any commission.
+
+SELECT  employee_id, first_name, commission_pct
+FROM    employees
+WHERE   commission_pct is null;
+
+
+distinct qualifier:
+-------------------
+to eliminate duplicate rows in the output of the select command.
+
+22) SELECT   distinct job_id
+FROM     employees;
+
+23) SELECT   distinct department_id
+FROM     employees;
+
+24) SELECT   distinct department_id, job_id
+FROM     employees;
+
+
+ORDER BY clause:
+----------------
+the order of retrieval of rows from the select command is always uncertain.
+order by clause is used to retrieve in the ascending, descending, alphabetical or chronological order.
+if used, it must be the last clause in the select command.
+
+
+SELECT   columnlist/*
+FROM     tablename
+[WHERE   condition]
+[ORDER   BY   col-1 [ ASC / DESC ]  [, col-2 [ASC / DESC], .... ] ];
+
+25) display all employees in the increasing order of their salary.
+
+SELECT  employee_id, first_name, salary
+FROM    employees
+ORDER   BY  salary  ASC;
+
+26) display all employees as per their senioriy.
+
+SELECT  employee_id, first_name, hire_date
+FROM    employees
+ORDER   BY  hire_date;
+
+
+27) display all employees in the ascending order of department then by salary.
+
+SELECT   employee_id, first_name, department_id, salary
+FROM     employees
+ORDER    BY   department_id, salary;
+
+
+
+							Library Functions
+
+
+1) number functions
+2) character functions
+3) date functions
+
+1) number functions:
+	a) abs(col/val)
+	b) power(col/val, col/val)
+	c) sqrt(col/val)
+	d) sin(col/val)
+	e) cos(col/val)
+	f) ceil(col/val)	: return next integer
+	g) floor(col/val)	: return previous integer
+	h) round(col/val)
+	i) trunc(col/val)
+DUAL:
+-----
+	it is a dummy table in oracle that contain only one row.
+	
+28)	select  abs(-25) from dual;
+29)	select  power(5,3)  from dual;
+30)	select ceil(11.89), floor(11.89), round(11.89567,2) from dual;
+
+2) character functions
+	a) length(col/val)
+	b) upper(col/val)
+	c) lower(col/val)
+	d) initcap(col/val)
+	e) instr(col/val, search_string)	: return the index of search_string in the col/val
+	f) substr()
+
+
+3) date functions
+
+	sysdate : sydate is a pseudo column that return system date. internally it contain time also.
+
+31)	select  sysdate  from dual;
+	
+
+	date arithmetic:
+		date + n	= date
+		date - n	= date
+		date2 - date1	= n
+
+32) 	display the hire date and probation date of all employees.
+	the probation date is 180 days from their hire date.
+
+
+	SELECT  employee_id, first_name, hire_date, hire_date+180 AS "Probation Date"
+	FROM    employees;
+
+
+33)	display the service of every employees.
+
+	SELECT  employee_id, first_name, hire_date, trunc((sysdate - hire_date)/365) AS "Service in Years"
+	FROM    employees;
+
+
+	a) ADD_MONTHS(date, n)
+	b) MONTHS_BETWEEN(date-1, date-2)
+
+34) 	SELECT  employee_id, first_name, hire_date, trunc(months_between(sysdate, hire_date)/12) AS "Service in Years"
+	FROM    employees;
+
+	c) LAST_DAY(date)
+	d) NEXT_DAY(date, 'weekdayname')
+
+35)	SELECT  next_day(sysdate, 'friday')
+	FROM    dual;	 
+
+
+
+4) conversion functions:
+
+	a) TO_CHAR(date, 'date picture')
+
+	date pictures			description
+		DD				
+		MM
+		YY
+		YYYY
+
+		MON
+		MONTH
+
+		DDD			julian day
+		DAY			week day name
+
+		hh
+		mi
+		ss
+
+		am / pm			
+
+
+		
+36)	SELECT  TO_CHAR(sysdate, 'dd month yyyy') 
+	FROM    dual;
+
+37)	SELECT  employee_id, first_name, to_char(hire_date, 'dd-month-yy')
+	FROM    employees;
+
+38)	SELECT  to_char(sysdate, 'ddd')
+	FROM    dual;
+
+39)	SELECT  to_char(sysdate, 'day')
+	FROM    dual;
+
+
+40)	SELECT  to_char(sysdate, 'hh:mi:ss am')
+	FROM    dual;
+
+41)  	SELECT employee_id, first_name, to_char(hire_date, 'dd-month-yyyy hh:mi:ss am') 
+	FROM   employees;
+
+
+	b) TO_CHAR(number, 'number picture')
+
+42)	SELECT  employee_id, first_name, salary, to_char(salary, '$99,999.99')
+	FROM    employees;
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
