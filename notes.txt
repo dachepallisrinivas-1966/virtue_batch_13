@@ -28,6 +28,10 @@ Software links:
 
 
 
+
+
+
+
 									Core Java
 									----------
 
@@ -2144,6 +2148,9 @@ ORDER    BY   department_id, salary;
 1) number functions
 2) character functions
 3) date functions
+4) conversion functions
+5) group functions	(aggregate functions)
+
 
 1) number functions:
 	a) abs(col/val)
@@ -2260,6 +2267,442 @@ DUAL:
 
 42)	SELECT  employee_id, first_name, salary, to_char(salary, '$99,999.99')
 	FROM    employees;
+
+
+
+[8] 8-jan-2022
+
+group functions (aggregate functions):
+
++	sum(col/val)
++	avg(col/val)
++	min(col/val)
++	max(col/val)
++	count(col/val)
+
+42) SELECT sum(salary), avg(salary), min(salary), max(salary)
+    FROM   employees;
+
+43) SELECT count(*)
+    FROM   employees;
+
+44) SELECT count(employee_id)
+    FROM   employees;
+
+45) SELECT count(salary), COUNT(commission_pct)
+    FROM   employees;
+
+
+
+GROUP BY clause:
++	It is used to divide the rows into groups and can extract summary information for each group.
+
+syntax:
+-------
+SELECT	columnlist/*
+FROM	tablename
+[WHERE  condition]
+[GROUP  BY  col-1 [ , col-2, col-3, ..] ]
+[ORDER   BY   col-1 [ ASC / DESC ]  [, col-2 [ASC / DESC], .... ] ];
+
+
+46) display total salary given to each department. 
+
+SELECT   department_id, sum(salary)
+FROM     employees
+GROUP    BY   department_id
+ORDER    BY   department_id;
+
+47) display average salary of each designation.
+
+SELECT   job_id, avg(salary)
+FROM     employees
+GROUP    BY   job_id;
+
+48) display number of employees in each department.
+
+SELECT   department_id, count(*)
+FROM     employees
+GROUP    BY   department_id;
+
+
+
+HAVING clause:
+--------------
++	this clause is used to filter the rows after grouping.
++	it is used always in conjunction with GROUP BY clause.
+
+syntax:
+------
+SELECT	columnlist/*
+FROM	tablename
+[WHERE  condition]
+[GROUP  BY  col-1 [ , col-2, col-3, ..] ]
+[HAVING condition]
+[ORDER   BY   col-1 [ ASC / DESC ]  [, col-2 [ASC / DESC], .... ] ];
+
+
+
+49) display number of employees in each department if the department contain atleast 5 employees.
+
+SELECT  department_id, count(*)
+FROM    employees
+GROUP   BY   department_id
+HAVING  count(*) >= 5;
+
+
+what is the difference between WHERE and HAVING?
++	WHERE clause used to filter the rows before grouping and
+	HAVING clause used to filter the rows after grouping.
+
+
+50) display total salary of each designation for all departments whose department id is more than 50.
+
+
+SELECT  job_id, sum(salary)
+FROM    employees
+WHERE   department_id > 50
+GROUP   BY  job_id
+ORDER   BY  job_id;
+
+
+51) groups within groups
+
+display total salary of each job within each department.
+
+
+main group	►	department id
+sub group	►	job id
+
+SELECT   department_id, job_id, sum(salary)
+FROM     employees
+GROUP    BY  department_id, job_id
+ORDER    BY  department_id, job_id;
+
+
+
+							JOINS
+							-----
+used to retrieve data from multiple related tables.
+both the tables should have a common column.
+
+types of joins:
+1) equi join		(if the join condition is on equality)
+2) non-equi join	(otherwise)
+
+
+1) inner join		
+2) outerjoin
+
+
+SELECT   col-1, col-2, ...
+FROM     table-1
+NATURAL JOIN     table-2;
+
+the natural join operation get data by comparing all common column(s) between two tables.
+
+
+SELECT   col-1, col-2, ...
+FROM     table-1
+JOIN     table-2
+USING    (common-column-name);
+
+the USING clause specify the common column that should be used for comparing tables.
+
+SELECT   col-1, col-2, ...
+FROM     table-1
+JOIN     table-2
+ON       (join condition);
+
+
+
+52) display employee id, first name and department name.
+
+SELECT    employee_id, first_name, department_name
+FROM      employees
+JOIN      departments
+USING     (department_id);
+
+(or)
+
+SELECT    employee_id, first_name, department_name
+FROM      employees
+JOIN      departments
+ON        (employees.department_id = departments.department_id);
+
+(or)
+
+SELECT    employee_id, first_name, department_name
+FROM      employees  E
+JOIN      departments  D
+ON        (E.department_id = D.department_id);
+
+E and D are table aliases.
+
+
+
+Three-Way Joins:
+-----------------
+
+53) display employee id, first name, department name and job title.
+
+SELECT   employee_id, first_name, department_name, job_title
+FROM     employees
+JOIN     departments
+USING    (department_id)
+JOIN     jobs
+USING    (job_id);
+
+(or)
+
+
+....
+
+
+
+Four-Way joins:
+------------------
+
+54) display employee id, first name, department name, job title, city
+
+SELECT  employee_id, first_name, department_name, job_title, city
+FROM    employees
+JOIN    departments
+USING   (department_id)
+JOIN    jobs
+USING   (job_id)
+JOIN    locations
+USING   (location_id);
+
+
+INNER  JOIN  : 
+	will give only matching rows.
+	
+
+
+OUTER JOIN:
+	it will display all matching rows as well any unmatched rows.
+
+a) LEFT OUTER JOIN
+b) RIGHT OUTER JOIN
+c) FULL OUTER JOIN
+
+
+55) 
+
+SELECT  employee_id, first_name, department_name
+FROM    employees
+LEFT OUTER JOIN  departments
+USING   (department_id);
+
+
+56) 
+
+SELECT  employee_id, first_name, department_id, department_name
+FROM    employees
+RIGHT OUTER JOIN  departments
+USING   (department_id);
+
+
+57) 
+
+SELECT  employee_id, first_name, department_id, department_name
+FROM    employees
+FULL  OUTER JOIN  departments
+USING   (department_id);
+
+
+SELF  JOIN:
+	joining a table to itself.
+
+
+
+58) display the employee id, first name and his/her manager name.
+
+SELECT  E.employee_id, E.first_name "employee name", M.first_name AS "manager name"
+FROM    employees  E
+JOIN    employees  M
+ON      (E.manager_id = M.employee_id);
+
+
+
+
+							SUB QUERY
+							---------
++	it is also called as inner query or inner select or sub select.
++	the sub query is executed first then the result is passed to the outer query. outer query is executed that.
+
+
+59) display the employee name who earn maximum salary.
+
+SELECT  employee_id, first_name, salary
+FROM  employees
+WHERE salary = (SELECT max(salary)
+FROM   employees);
+
+
+60) display all employees who is having the same job as Neena.
+
+SELECT  employee_id, first_name, job_title
+FROM    employees
+JOIN    jobs
+USING   (job_id)
+WHERE   job_id = (SELECT  job_id
+FROM    employees
+WHERE   first_name = 'Neena');
+
+					
+
+							CORRELATED SUB QUERY
+							--------------------
++	this type of query is executed as many times as the number of rows in the outer query.
++	it will take one row from the outer query and go to the inner query and qualify the outer query for matching.
+	if a match is found, the row is displayed otherwise it is ignored.
++	the above process is happened for each row in the outer query.
+
++	if the inner query contain a column that belongs to outer query in it's join condition then it is identified as 
+	correlated sub query.
+
+
+61) display all employees who earn more than the average salary in their department.
+
+SELECT  employee_id, first_name, salary, department_id
+FROM    employees E
+WHERE   salary > (SELECT  avg(salary)
+                  FROM    employees M
+                  WHERE   M.department_id = E.department_id);
+
+                  
+								VIEWS
+								-----
++	It is a virtual table, through which we can retrieve data from an underlying table known as 
+	base table.
++	a view never contain any data on it's own.
++	it is stored as SELECT staments only.
+
++	it is mainly for security.
++	it is also used to reduce the repetetive typing of complex sql commands.
+
+
+CREATE  OR REPLACE  VIEW   empid_first_name_view
+AS
+SELECT  employee_id, first_name
+FROM    employees;
+
+
+SELECT * FROM empid_first_name_view;
+
+
+CREATE VIEW employee_details_view
+AS
+SELECT   employee_id, first_name, department_name, job_title, city, country_name
+FROM     employees
+JOIN     departments
+USING    (department_id)
+JOIN     jobs
+USING    (job_id)
+JOIN     locations
+USING    (location_id)
+JOIN     countries
+USING    (country_id);
+
+
+SELECT   * FROM  employee_details_view;
+
+
+						SET OPERATIONS
+						--------------
+to combine two queries.
+
+
+UNION
+UNION ALL
+INTERSECT
+MINUS
+
+
+SELECT  salary  FROM   employees   WHERE   department_id = 50
+MINUS
+SELECT  salary  FROM   employees   WHERE   department_id = 80;
+
+
+
+						INDEX
+						-----
+
+it is meant for faster searching.
+for every primary key column, a unique index is generated automatically by the oracle server.
+this index is used whenever we perform querying on primary key.
+
+
+CREATE  INDEX    department_id_index
+ON   employees(department_id);
+
+
+select * from employees where department_id > 50;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
