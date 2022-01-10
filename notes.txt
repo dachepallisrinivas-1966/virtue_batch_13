@@ -2584,7 +2584,7 @@ WHERE   salary > (SELECT  avg(salary)
 +	it is also used to reduce the repetetive typing of complex sql commands.
 
 
-CREATE  OR REPLACE  VIEW   empid_first_name_view
+62) CREATE  OR REPLACE  VIEW   empid_first_name_view
 AS
 SELECT  employee_id, first_name
 FROM    employees;
@@ -2593,7 +2593,7 @@ FROM    employees;
 SELECT * FROM empid_first_name_view;
 
 
-CREATE VIEW employee_details_view
+63) CREATE VIEW employee_details_view
 AS
 SELECT   employee_id, first_name, department_name, job_title, city, country_name
 FROM     employees
@@ -2621,7 +2621,7 @@ INTERSECT
 MINUS
 
 
-SELECT  salary  FROM   employees   WHERE   department_id = 50
+64) SELECT  salary  FROM   employees   WHERE   department_id = 50
 MINUS
 SELECT  salary  FROM   employees   WHERE   department_id = 80;
 
@@ -2635,11 +2635,505 @@ for every primary key column, a unique index is generated automatically by the o
 this index is used whenever we perform querying on primary key.
 
 
-CREATE  INDEX    department_id_index
+65) CREATE  INDEX    department_id_index
 ON   employees(department_id);
 
 
 select * from employees where department_id > 50;
+
+
+[9] 10-jan-2022
+
+
+Top-N Analysis:
+---------------
+66) find the second highest salary.
+67) display top 3 earners.
+68) display top 3 senior employees.
+69) display all employees who do not have any subordinates.
+
+
+
+								PL/SQL
+								------
++	PL/SQL stands for procedural language of SQL
+
++	we write PL/SQL blocks.
+	+	anonymous block		(unnamed block)
+	+	named block		(stored sub programs)
+
++	PL/SQL executor is responsible for executing PL statements.
++	SQL executor is responsible for executing SQL Commands.
++	PL/SQL block contain both SQL commands and PL constructs.
+
+
+PL/SQL architecture:
+[diagram]
+
+
+PL/SQL datatypes:
+-----------------
++	char, varchar, varchar2, number, date, boolean
+
+
+declaring variables:
+--------------------
+	variable_name    :   datatype   [ :=   expr ];
+
+
+anonymous block:
+---------------
+[DECLARE
+	variable declarations]
+BEGIN
+	statement(s)
+[EXCEPTION
+     	WHEN   exception-id    THEN
+		statement(s);]
+END;
+
+
+program-1:
+-----------
+declare
+    first_number   number(3);
+    second_number  number(3);
+    result         number(3);
+
+begin
+    first_number := 10;
+    second_number := 20;
+    result := first_number + second_number;
+
+    dbms_output.put_line('Sum = ' || result);
+end;
+/
+
+
+
+SELECT statement in PL/SQL:
+-----------------------------
+SELECT   columnlist/*
+INTO     var-1, var-2, ...
+FROM     tablename
+[WHERE   condition]
+[GROUP   BY  col-1  [, col-2 ...] ]
+[HAVING  condition]
+[ORDER   BY  col-1  [ASC/DESC]  [, col-2 [ASC/DESC], ... ];
+
+
+Note:
+-----
++	select statement that return more number of rows cause an exception to be raised.	(TOO_MANY_ROWS)
++	select statenent that return no row cause an exception to be raised.			(NO_DATA_FOUND)
+
+
+
+INTO phrase:
+------------
+It is a madatory phrase, used to store the data retrieved from the database in pl/sql variables.
+
+
+
+program-2:
+----------
+
+write a pl/sql block to display the details of an employee whose id is 173.
+
+declare
+   v_employee_id   number(4);
+   v_first_name    varchar2(10);
+   v_salary        number(5);
+begin
+   SELECT   employee_id, first_name, salary
+   INTO     v_employee_id, v_first_name, v_salary
+   FROM     employees
+   WHERE    employee_id = 173;
+
+   dbms_output.put_line('Employee Id = ' || v_employee_id);
+   dbms_output.put_line('First Name  = ' || v_first_name);
+   dbms_output.put_line('Salary      = ' || v_salary);
+end;
+/
+
+
+program-3:
+----------
+write a pl/sql block to display the details of an employee whose id is 501.
+
+
+declare
+   v_employee_id   number(4);
+   v_first_name    varchar2(10);
+   v_salary        number(5);
+begin
+   SELECT   employee_id, first_name, salary
+   INTO     v_employee_id, v_first_name, v_salary
+   FROM     employees
+   WHERE    employee_id = 501;
+
+   dbms_output.put_line('Employee Id = ' || v_employee_id);
+   dbms_output.put_line('First Name  = ' || v_first_name);
+   dbms_output.put_line('Salary      = ' || v_salary);
+exception
+   when  no_data_found  then
+      dbms_output.put_line('No employee present with this id');
+end;
+/
+
+
+program-4:
+---------
+write a program to display all sales managers.
+
+
+declare
+   v_employee_id   number(4);
+   v_first_name    varchar2(10);
+   v_job_id        varchar2(10);
+   v_salary        number(5);
+begin
+   SELECT   employee_id, first_name, job_id, salary
+   INTO     v_employee_id, v_first_name, v_job_id, v_salary
+   FROM     employees
+   WHERE    job_id = 'SA_MAN';
+
+   dbms_output.put_line('Employee Id = ' || v_employee_id);
+   dbms_output.put_line('First Name  = ' || v_first_name);
+   dbms_output.put_line('Job Id = ' || v_job_id);
+   dbms_output.put_line('Salary      = ' || v_salary);
+exception
+   when  no_data_found  then
+      dbms_output.put_line('No employee present with this job id');
+   when  too_many_rows  then
+      dbms_output.put_line('More employees are there with this job id');
+end;
+/
+
+
+cursor:
+-------
++	it is a private sql area (special memory in the server) that hold all the rows retreved by the oracle server as
+	the result of select statement from pl/sql block.
+
+steps:
++	declare a cursor	(no memory is allocated, rather the query is parsed)
++	open the cursor		(associated sql command is executed, memory is allocated)
++	fetch one row at a time from the cursor and store the data in the pl/sql variables
++	do the above step until all rows are processed.
++	finally, close the cursor.
+
+
+pl/sql attributes:
+------------------
+
+%type		to assign datatype of a column to pl/sql variable
+%rowtype	to assign the entire record type
+
+
+cursor attributes:
+-----------------
+%notfound	
+%found
+%isopen
+
+
+
+program-5:
+---------
+write a program to display all sales managers.
+
+
+declare
+   v_employee_id   employees.employee_id%type;
+   v_first_name    employees.first_name%type;
+   v_job_id        employees.job_id%type;
+   v_salary        employees.salary%type;
+
+   CURSOR   cur_sales_manager
+   IS
+   SELECT   employee_id, first_name, job_id, salary
+   FROM     employees
+   WHERE    job_id = 'SA_MAN';
+
+
+begin
+   OPEN    cur_sales_manager;
+
+   LOOP
+      FETCH  cur_sales_manager  INTO  v_employee_id, v_first_name, v_job_id, v_salary;
+      EXIT  WHEN  cur_sales_manager%NOTFOUND;
+
+      dbms_output.put_line('Employee Id = ' || v_employee_id);
+      dbms_output.put_line('First Name  = ' || v_first_name);
+      dbms_output.put_line('Job Id = ' || v_job_id);
+      dbms_output.put_line('Salary      = ' || v_salary);
+   END LOOP;
+
+   CLOSE   cur_sales_manager;
+ 
+exception
+   when  no_data_found  then
+      dbms_output.put_line('No employee present with this job id');
+
+end;
+/
+
+
+CURSOR FOR LOOP:
+----------------
++	no need to open the cursor
++	no need to close the cursor
++	no need to fetch the data.
++	no need of declaring pl/sql variables to store the cursor data.
+
+
+program-6:
+---------
+write a program to display all sales managers.
+
+
+declare
+
+   CURSOR   cur_sales_manager
+   IS
+   SELECT   employee_id, first_name, job_id, salary
+   FROM     employees
+   WHERE    job_id = 'SA_MAN';
+
+begin
+
+   FOR current_row  IN  cur_sales_manager
+   LOOP
+      dbms_output.put_line('Employee Id = ' || current_row.employee_id);
+      dbms_output.put_line('First Name  = ' || current_row.first_name);
+      dbms_output.put_line('Job Id = ' || current_row.job_id);
+      dbms_output.put_line('Salary      = ' || current_row.salary);
+   END LOOP;
+
+exception
+   when  no_data_found  then
+      dbms_output.put_line('No employee present with this job id');
+
+end;
+/
+
+
+
+PARAMETERIC CURSOR:
+-------------------
++	no need to declare the cursor
++	no need to open the cursor
++	no need to close the cursor
++	no need to fetch the data.
++	no need of declaring pl/sql variables to store the cursor data.
+
+
+program-6:
+---------
+write a program to display all sales managers.
+
+
+begin
+
+   FOR current_row  IN  ( SELECT   employee_id, first_name, job_id, salary
+                          FROM     employees
+                          WHERE    job_id = 'SA_MAN')
+   LOOP
+      dbms_output.put_line('Employee Id = ' || current_row.employee_id);
+      dbms_output.put_line('First Name  = ' || current_row.first_name);
+      dbms_output.put_line('Job Id = ' || current_row.job_id);
+      dbms_output.put_line('Salary      = ' || current_row.salary);
+   END LOOP;
+
+exception
+   when  no_data_found  then
+      dbms_output.put_line('No employee present with this job id');
+
+end;
+/
+
+
+stored sub programs:
+	because these programs are stored in the database, they are called so.
+
+	there are two types.
+
+	a) stored procedure	(accept parameters but cannot return any value)
+	b) stored function	(accept parameters but should return any value).
+
+
+program-7:
+-----------
+write a stored procedure that will increase salary of all employees by given percentage.
+
+
+CREATE  OR   REPLACE  PROCEDURE   proc_raise_salary(p_percentage   number)
+IS
+BEGIN
+    update employees2
+    set salary = salary + salary*p_percentage/100;
+END;
+/
+
+
+execute proc_raise_salary;
+
+
+program-8:
+----------
+write a stored function to return the average salary of a given department_id.
+
+CREATE  OR  REPLACE  FUNCTION  fun_get_avg_salary(p_department_id  number)
+RETURN  number
+IS
+    v_avg_salary   number(7,2);
+
+BEGIN
+    SELECT  avg(salary)
+    INTO    v_avg_salary
+    FROM    employees
+    WHERE   department_id = p_department_id;
+ 
+    RETURN  v_avg_salary;
+END;
+/
+
+
+SELECT   fun_get_avg_salary(50)  from dual;
+
+
+PACKAGE:
+--------
+	collection of related stored procedures and functions.
+
+	every package will have two components.
+	a) package specification (package declaration)
+	b) package body
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+								Multi-Threading
+								---------------
+what is a thread?
++	it is a light weight process.
++	we can have multiple threads in a program using which we can perform multiple tasks parallelly.
+
+how many ways?
++	by extending java.lang.Thread class
++	by implementing java.lang.Runnable interface?
+
+constructors:
++	public Thread()
++	public Thread(Runnable)
+
+
+why two ways?
++	if you want to create a thread on a sub class, we cannot use extends again.
++	here we have to use implements Runnable.
+
+
+class 		A 	
+{
+
+}
+
+
+class		B	extends		A   implements  Runnable {
+
+
+}
+
+
+
+what is a thread life cycle?
+[diagram]
+
+life cycle methods?
++	start()
++	stop()
++	run()		:	it contain statements related to the task
+				it is executed automatically when we call start()
+
+other methods:
+wait()
+notify()
+sleep(milliseconds)
+suspend()
+yield()
+resume()
+
+currentThread()
+setName()
+getName()
+getPriority()
+setPriority()
+getId()
+isAlive()
+setDaemon(boolean)
+
+
+Thread priorities:
+---------------------
+It is an integer between 1 to 10.
+
+1	MIN_PRIORITY
+5	NORM_PRIORITY		(default priority)
+10	MAX_PRIORITY
+
+
+What is Daemon thread?
++	Daemon thread is abruptly terminated when no other threads are running.
++	It cannot run on its own.
+
+setDaemon(true);
+
+
+synchronization?
++	it is the capability to control the access of multiple threads to any shared resource.
+
++	synchronized method
++	synchronized block
+
+
+
+
+							Concurrency API
+							---------------
+						    (java.util.concurrent)
+
+ThreadPool
+ExecutorService:
+	it allow us to create a pool of threads.
+
+	+	newFixedThreadPool(number_of_threads)
+
+
+
+
+
+
+
+
+
 
 
 
