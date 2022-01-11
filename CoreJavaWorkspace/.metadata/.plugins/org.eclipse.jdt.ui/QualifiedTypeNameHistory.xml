@@ -16,4 +16,8 @@
     <fullyQualifiedTypeName name="com.virtue.comparator.EmpIdComparator"/>
     <fullyQualifiedTypeName name="java.lang.Cloneable"/>
     <fullyQualifiedTypeName name="java.util.Map.Entry"/>
+    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="java.sql.Statement"/>
+    <fullyQualifiedTypeName name="java.sql.Types"/>
 </qualifiedTypeNameHistroy>

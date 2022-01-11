@@ -232,7 +232,11 @@ what is a constant?
 	constants can be defined using "final" keyword.
 
 
-	final double PI = 3.14;
+	double PI = 3.14;		// declaring a variable whose name is PI.
+	final double PI = 3.14;		// declaring a constant whose name is PI
+
+
+
 	final int MAX_MARKS = 100;
 	final int PASS_MARKS = 35;
 
@@ -1436,7 +1440,7 @@ a) multi-catch exception
 
 b) try-with-resources
 
-    try (declare closable resourceses here....){
+    try (declare closable resources here....){
                     ........................
     } catch(....){
 
@@ -1444,7 +1448,7 @@ b) try-with-resources
 
     the closable resource will be close automatically.
 
-    a Resource has to implement java.lang.Closable interface
+    a Resource has to implement java.lang.Closable or java.lang.AutoClosable interface
     to be recognized as closable.
 
 
@@ -2651,6 +2655,22 @@ Top-N Analysis:
 67) display top 3 earners.
 68) display top 3 senior employees.
 69) display all employees who do not have any subordinates.
+    (or)
+    display all employees who are not managers.
+
+       SELECT e.employee_id, e.first_name
+       FROM employees e
+       LEFT JOIN employees sub
+       ON e.employee_id = sub.manager_id
+       WHERE sub.manager_id IS NULL;
+
+       (or)
+
+       SELECT e.employee_id, e.first_name
+       FROM employees e
+       WHERE NOT EXISTS (SELECT 1
+                         FROM employees e2
+                         WHERE e2.manager_id = e.employee_id);
 
 
 
@@ -3012,25 +3032,6 @@ PACKAGE:
 	b) package body
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 								Multi-Threading
 								---------------
 what is a thread?
@@ -3125,6 +3126,250 @@ ExecutorService:
 	it allow us to create a pool of threads.
 
 	+	newFixedThreadPool(number_of_threads)
+
+
+
+
+
+[10] 11-jan-2022
+
+								ANT / Maven 
+								-----------
+
+It is a build tool.
+It will create a .jar/.war file (Distributable file).
+
+It can download all the third-party libraries. (dependencies).
+
+xml 		
++	stands for extensible markup language
++	it is a data format that can used across different o/s
++	it is mainly used to store configuration data.
+
+
+pom.xml	
++	pom stands "project object model"
++	it contain all dependencies, plug-ins and project related properties.
+
+
+
+maven central repository	
++	this repo contain all the frequently used dependencies required for java developers.
++	the dependencies are copied from central repo to local repo (it is named as ".m2" folder)
+
+
+
+
+								JDBC
+							(Java Database Connectivity)
+
+							      (java.sql)
+
+Java APP	►	JDBC API	►	JDBC Driver Manager	►	JDBC Driver
+
+
+JDBC API is implemented by DB Vendors like Oracle, MySQL etc.,
+
+Oracle JDBC Driver	►	It is a collection of implementation classes of JDBC API (oracle implementation)
+MySQL JDBC Driver	►	It is a collection of implementation classes of JDBC API (mysql community implementation)
+
+These JDBC Drivers are available in the form of ".jar" files.
+
+
+
+
+JDBC Drivers are 4 types.
+1) Type-1 Driver	(JDBC-ODBC Bridge Driver)	-	It was not supported any more 
+2) Type-2 Driver	
+3) Type-3 Driver	
+4) Type-4 Driver	(Thin Driver)
+
+
+steps:
+------
+1) load the driver class	(this step is optional from jdk1.8)
+2) establish connection
+3) execute sql commands
+4) finally close the connection.
+
+
+JDBC API:
+---------
++	DriverManager is absrtact class
+	+	getConnection()
+
++	Connection interface
+	+	Statement createStatement()
+	+	PreparedStatement prepareStatement(sql)
+	+	CallableStatement prepareCall(sql)
+	
++	Statement interface	
+	+	execute(sql)
+	+	executeUpdate(sql)	: to execute INSERT/UPDATE/DELETE/CREATE
+	+	executeQuery(sql)	: to execute SELECT
+
+
++	PreparedStatement interface
+	+	it supports parameterized queries.
+
+	+	execute()
+	+	executeUpdate()		: to execute INSERT/UPDATE/DELETE/CREATE
+	+	executeQuery()		: to execute SELECT
+	
+
++	CallableStatement interface
+	+	to call stored procedures / stored functions
+
+
++	ResultSet interface
+	+	used to hold the data that is returned from the database as a result of executing SELECT command.
+
+
+
+
+
+what is the difference between Statement and PreparedStatement?
+
+		Statement									PreparedStatement
+----------------------------------------------------------------------------------------------------------------------------------------------
+1) It is used when SQL query is to be executed only once.			It is used when SQL query is to be executed multiple times.
+
+2) You can not pass parameters at runtime.					You can pass parameters at runtime. (parameterized query)
+
+3) Performance is very low.							Performance is better because it uses pre-compiled queries.
+
+4) we can execute multiple sql commands using a single				we can execute only one sql command using a single 
+   Statement object.								PreparedStatement object
+
+
+
+
+	CallableStatement cs=con.prepareCall("{call procedure_name(?,?)}");  
+	
+	(or)
+
+	CallableStatement cs=con.prepareCall("{? = call function_name(?,?)}");  
+
+
+
+							
+
+							HTML
+							----
+HTML	stands for Hyper Text Markup Language.
+
+HTML		:	to design web pages
+
+			important tags
+			+	<b>, <i>, <sup>, <sub>, <strike>
+
+
+what is a block element?
+	it occupy 100% width of browser.
+	eg: <h1> to <h6>
+	    <p>
+	    <hr>
+	    <div>
+	    <ul>, <ol>, <li>
+
+what is an inline element?
+	it occupy width of the element. not the browser width.
+
+	eg: <b>, <i>, <span>, <u>, <strike>, <sup>, <sub>
+
+what are sematic tags?
+	eg: <strong>	
+	    <em>
+	    <del>
+
+
+div and span?
+	div is a container, which can have set of other html components.
+	span is a place holder, in which we can place content dynamically.
+
+what is ordered list, unorders list?
+
+what are table related tags?
+			
+	<table>, <tr>, <th>, <td>
+	<caption>
+	<thead>, <tbody>, <tfoot>
+
+
+	important attributes:
+	+	rowspan
+	+	colspan
+	+	cellpadding
+	+	cellspacing
+
+what is anchor tag?
+
+
+what is image tag?
+
+
+
+what are form elements?
+	<label>
+	<input    type="text | radio | checkbox | file | password | button">
+	<button>
+	<textarea>
+	<select> , <option>
+			
+			
+	method attribute:
+	+	get
+	+	post
+
+	action attribute:
+	+	server program name to be executed when the user clicked on the submit button.
+
+
+
+
+									CSS	
+								(Cascading Style Sheet)
+
+
+different types:
++	inline
++	internal (embedded)
++	external    (".css" file)
+	-	<link  rel="stylesheet" href="sample.css" />
+
++	for styling the web page
+
++	selectors	
+	+	id
+	+ 	class
+	+	element selector
+
+
++	pseudo selectors
+	+	first-child
+	+	last-child
+	+	nth-child
+
+
+media queries:
++	to achieve responsiveness.
++	@media
+
+
+
+									Javascript
+									----------
+
+Javascript	:	client side scripting language
+			every browser will have javascript engine
+			used to perform client side validations.
+
+
+			document.getElementById()
+			innerHTML
+			value
+
+
 
 
 
