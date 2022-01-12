@@ -20,6 +20,10 @@ Software links:
 	https://www.oracle.com/tools/downloads/sqldev-downloads.html
 	download windows 32-bit/64-bit
 
++	Apache Tomcat 
+	https://tomcat.apache.org/download-90.cgi
+
+
 
 
 
@@ -3357,17 +3361,96 @@ media queries:
 
 
 
-									Javascript
-									----------
+								Javascript
+								----------
+							(ECMASCRIPT 2015 - ES6)
 
 Javascript	:	client side scripting language
 			every browser will have javascript engine
 			used to perform client side validations.
+			javascript is dynamic language.
+
 
 
 			document.getElementById()
 			innerHTML
 			value
+
+Node JS		:	It is a server environment in which javascript programs can be executed.
+
+
+
+	HTML element				Javascript Event
+
+1) 	textbox					onblur
+2) 	button, radio, check			onclick
+3) 	select					onchange
+
+
+
+
+								Bootstrap
+								---------
+It is a CSS library. It provide pre-defined CSS classes.
+Only for designing responsive web pages.
+
+
+
+								Java EE
+								-------
+							(Java Enterprise Edition)
+Servlet:
++	Servlet is a web component that is deployed on the server to create dynamic web page.
++	Servlet API is provided by Java People.
+
+
++	Servlet API implementation is provided by Apache Tomcat, JBOSS etc.,
+
+
+
+What is the difference between GET & POST?
+
+
+Servlet Life cycle methods:
++	init()
++	service()
++	destroy()
+
+
+ServletConfig	:	we will have one object for one user.
+ServletContext	:	we will have only one ServletContext object for the entire application.
+
+
+
+http://localhost:8081/ServletProject/
+
+
+
+QueryString	(Request Parameters):
+	url ? var-1 = value-1 & var-2 = value-2 & var-3 = value-3 ......
+
+
+Session Management:
+-------------------
+http protocol is stateless.
+
+session it a memory in the server given exclusively for one client.
+session id, expiry time.
+
+
+4 techniques:
+
+1) hidden variables
+2) url redirection
+3) cookies
+4) session
+
+
+
+
+
+
+
 
 
 
