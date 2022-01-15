@@ -20,4 +20,5 @@
     <fullyQualifiedTypeName name="java.sql.Connection"/>
     <fullyQualifiedTypeName name="java.sql.Statement"/>
     <fullyQualifiedTypeName name="java.sql.Types"/>
+    <fullyQualifiedTypeName name="com.virtue.model.Book"/>
 </qualifiedTypeNameHistroy>

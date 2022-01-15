@@ -3388,11 +3388,64 @@ Node JS		:	It is a server environment in which javascript programs can be execut
 
 
 
+								Bootstrap - 5
+								-------------
+It is a CSS library.
+It follow grid system.
+it is used to design reponsive web pages.
+each row is used to divided into 12 columns.
+copy the CDN (Content Delivery Network) link in the head section. get this link from getbootstrap.com
 
-								Bootstrap
-								---------
-It is a CSS library. It provide pre-defined CSS classes.
-Only for designing responsive web pages.
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+container	:	will leave a margin on both left and right sides.
+container-fluid	: will occupy 100% width of the browser
+
+
+bg-info
+bg-dark
+br-primary
+bg-secondary
+bg-warning
+
+
+text-info
+text-dark
+text-primary
+text-secondary
+text-warning
+
+btn-info
+btn-dark
+btn-primary
+btn-secondary
+btn-warning
+
+
+
+table
+table-bordered
+table-hover
+table-striped
+
+
+form-horizontal
+form-vertical
+form-inline
+
+form-group
+form-control
+
+nav
+navbar-dark
 
 
 
@@ -3444,7 +3497,324 @@ session id, expiry time.
 2) url redirection
 3) cookies
 4) session
+	setAttribute(key, value)
+	getAttrubute(key)
 
+
+
+[12] 13-jan-2022
+
+									JSP
+								(Java Server Pages)
+
+
+jsp scriting elements:
+1) scriptlet			<%	java code	%>
+2) expression			<%=	expr		%>
+3) declaration			<%!	declarations of class level variables / methods %>
+
+
+9 JSP implicit objects:
+-----------------------
+1) out
+2) request
+3) response
+4) page
+5) pagecontext
+6) config
+7) application
+8) exception
+9) session
+
+
+
+JSP Expression Language:
+-------------------------
+	$ { variableName } 
+	$ { param.variableName }		►	to get the request parameter
+	$ { sessionScope.attirbuteName }	►	to get the session attribute
+	$ { requestScope.attributeName }	►	to get the request attribute
+
+
+
+request		►	data stored in request object, is available until client give another request.		
+session		►	data stored in session object, is available across mutiple requests of a client
+application	►	data stored in application object, is available across multiple users of the web application.
+
+
+
+jsp action tags (standard actions):
+-----------------------------------
+
+jsp:forward
+jsp:include
+jsp:useBean
+jsp:param
+	
+
+							Multi Layered Architure
+							-----------------------
+1) service layer		:	to perform validations and call dao layer methods.
+2) dao layer			:	to perform db related activities
+					DAO stands for "data access object"
+3) presentation (ui) layer	:	to perform input/output operations
+
+
+UI	►	service layer	►	dao layer	►	db
+
+
+
+
+
+
+
+								JUNIT 5
+								-------
+JUNIT is a testing framework.
+jupiter engine		►	 	to execute junit 5 test cases
+vintage engine		►		to execute junit 4 test cases
+
+
+
+
+
+								
+								Java EE Frameworks
+								------------------
+Hibernate
+Spring		►	Spring Core, Spring MVC, Spring REST, Spring Boot
+
+
+Code First Approach
+Database First Approach
+
+
+OOAD                                    OOP                         RDBMS
+----                                    ---                         -----
+Entity definition                       Class                       Table
+Entity                                  Object                      Record / Row / Tuple
+Property                                Field / Data member         Field / Column / Attribute
+
+
+Relations
+
+1)  Is A
+        Generalization                  Abstraction                 ---
+        Realization                     Inheritance                 Joins
+
+    Has A   (Associations)
+        Composition                     class  Address {            Single table having both
+            An entity posesses              - no id -               employee and address related
+            another entity.             }                           columns.
+            The posessed entity
+            will not have an            class  Employee {
+            identity.                       int empId;
+                                            ...
+            eg: Employee has an             Address address;
+                Address.                }
+
+        Aggregation
+            One-To-One                  class BankAccount {             BankAccounts
+                Employee,                   Long accnum;                JOIN Employees
+                SalaryAccount               ...                         ON accnum;
+                                        }                                   (or)
+                                        class  Employee {               Employee 
+                                            int empId;                  JOIN BankAccounts
+                                            BankAccount salAccount;     ON empId;
+                                        }
+
+            One-To-Many                 class Department {              Departments
+                Department, Employee        int deptNum;                JOIN Employees
+            Many-To-One                     Set<Employee> emps;         ON deptNum;
+                Employee, Department    }
+                                        
+                                        class Employee {                
+                                            int empId;
+                                            Department dept;
+                                        }
+            
+            Many-To-Many                class Project {                 Projects
+                Employee, Project           int projId;                 Join Proj_Emps
+                                            Set<Employee> team;         On projId
+                                        }                               And
+                                        class Employee {                Employees
+                                            int empId;                  JOIN Proj_Emps
+                                            Set<Project> projects;      On empId;
+                                        }                               
+        
+        Dependency                        
+            a component depends functionally                            -- NA --
+            on another component.
+
+            A UI depends on a Service.
+            A Service depends on a DAO
+            etc.,
+
+
+ORM (Object Relational Mapping) tools:
+-----------------------------------------
+    Hibernate       (ORM Framework)
+    TopLink
+    EclipseLink
+    iBatis
+    MyBatis
+    OpenJPA
+
+ORMs follow specifications of JPA and JTA.
+JPA     (Java Persistence API)	    javax.persistence
+JTA     (Java Transaction API)
+
+
+
+
+    An API -> provide methods for CRUD
+
+		C	create
+		R	read
+		U	update
+		D	delete
+
+
+              query language    -   HQL     (Hibernate Query Language)
+
+              SQL   -   tables
+                    SELECT    employee_id, first_name, salary
+                    FROM employees;
+
+              HQL   -   classes / properties
+
+                    SELECT  employeeId, firstName, salary  FROM Employee;
+
+            JPQL    -   (Java Persistence Query Language)
+                    JPA with Hibernate / Toplink / other ...
+
+
+
+
+JPA				►	specification of ORM
+implementations of JPA		►	Hibernate, TopLink
+
+
+[13] 14-Jan-2022
+
+
+configurations:
+1) xml based configuration			(hibeanate.cfg.xml), (yourClassName.hbm.xml)
+2) annotation based configuration
+3) java based configuration using annotation
+
+
+5 interfaces of Hibernate:
+
++	ConnectionProvider
++	SessionFactory		►	database name, credentials
++	Session
+	-	save()
+	-	update()
+	-	saveOrUpdate()
+	-	delete()
+	-	get()
+	-	load()
++	TransactionFactory
++	Transaction
+
+
+
+Entity class:
+	It is a model class that has mapping to database.
+
+
+@Entity
+@Table
+@Id
+@Column
+
+
+primary key generation strategies:
++	generated	(default)
++	auto
++	identity	(in mysql)
++	sequence	(in oracle 12c or higher)
++	table
+
+
+
+Hibernate Object States:
++	transient state		(An object we haven't attached to any session)
++	persistent state	( An object that we've associated with a session)
++	detached state
++	removed state
+
+
+
+what is the difference between get() and load() ?
+
+
+
+Inheritance strategies in hibernate:
++	SINGLE_TABLE
++	JOINED_TABLE
++	TABLE_PER_CLASS
+
+
+Assocations
++	@OneToOne
++	@OneToMany
++	@ManyToOne
++	@ManyToMany
+
+
+HQL	(Hibernate Query Language)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+								Design Patterns
+
+A design pattern is a well-described solution to a common software problem.
+
+1) Creational design patterns
+	+	single ton design pattern
+	+	factory design pattern
+	+	builder pattern
+
+2) Structural design patterns
+3) Behavioural design patterns
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
 
 
 
