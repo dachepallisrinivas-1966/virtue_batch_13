@@ -23,6 +23,12 @@ Software links:
 +	Apache Tomcat 
 	https://tomcat.apache.org/download-90.cgi
 
++	Spring Tool Suite 4
+	https://spring.io/tools
+
+
+
+
 
 
 
@@ -3800,7 +3806,66 @@ A design pattern is a well-described solution to a common software problem.
 
 
 
+[14] 17-jan-2022
 
+Spring Framework
+-----------------
++ The Spring Framework is an application framework and inversion of control container for the Java platform. 
++ The framework's core features can be used by any Java application, but there are extensions for building web applications 
+  on top of the Java EE (Enterprise Edition) platform.
+
+modules:
++	Spring core
++	Spring MVC
++	Spring MVC Rest 
++	Spring Boot
+
+
+
+Inversion of Control	(IoC)
+	we need not create any objects.
+	spring will have an IoC container in which all the objects are available already.
+	when ever you ask for it, container will give the readymade object.
+
+
+Dependency Injection	(DI)
+	Whenever an object is depend on another object, spring create the parent object with all dependent objects.
+
+class  A {
+
+}
+
+class	B {
+	...
+	A  obj;		/* containership : has-A relationship */
+}
+
+
+
+bean :	object in a spring is called bean.
+
+
+getBean("beanId", BeanClassName.class)
+
+
+bean scopes:
+-------------
+1) singleton	(default)
+2) prototype	(for every getBean() call, IoC container create different object.
+3) request
+4) session
+5) application
+
+
+injection:
++	property injection (setter injection)
++	constructor injection
+
+autowiring:
+Autowiring feature of spring framework enables you to inject the object dependency implicitly.
+1) byType
+2) byName
+3) constructor
 
 
 
