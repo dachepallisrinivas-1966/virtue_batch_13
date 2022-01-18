@@ -3868,194 +3868,67 @@ Autowiring feature of spring framework enables you to inject the object dependen
 3) constructor
 
 
+								Microservices
+								-------------
 
 
+Microservices?
++	Microservices is a service-oriented architecture pattern wherein applications are built 
+	as a collection of various smallest independent service units. 
++	It is a software engineering approach that focuses on decomposing an application into 
+	single-function modules with well-defined interfaces. 
++	These modules can be independently deployed and operated by small teams (5 to 10 developers)
+	that own the entire lifecycle of the service.
 
 
+Monolitihic?
++	It is like a big container in which all the software components of an application are clubbed into a single package.
 
 
+Microservice Architecture?
 
 
+Microservices vs. Monolithic Architecture
 
+		Microservices									Monolithic Architecture
 
+1) Every unit of the entire application should be the smallest, 		A single code base for all business goals
+   and it should be able to deliver one specific business goal.	
 
-		
+2) Service Startup is relatively quick						Service startup takes more time
 
+3) Fault isolation is easy. Even if one service goes down, 			Fault isolation is difficult. If any specific feature is not 
+   other can continue to function.						working, the complete system goes down.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+4) All microservices should be loosely coupled so that changes 			Monolithic architecture is tightly coupled.  Changes in one module 
+   made in one does not affect the other.					of code affect the other.
 
  
 
+Microservice Challenges?
++	MicroServices rely on each other, and they will have to communicate with each other.
++	Compared to monolithic systems, there are more services to monitor which are developed using different programming languages.
++	Different services will have its separate mechanism, resulting in a large amount of memory for an unstructured data.
++	Effective management and teamwork required to prevent cascading issues
++	It is difficult to manage application when new services are added to the system
++	A wide array of skilled professionals is required to support heterogeneously distributed microservices
 
 
+Microservices Tools
+
+1) Wiremock: Testing Microservices
++	WireMock is a flexible library for stubbing and mocking web services. 
++	It can configure the response returned by the HTTP API when it receives a specific request.
++	It is also used for testing Microservices.
 
 
+2) Docker
++	Docker is open source project that allows us to create, deploy, and run applications by using containers. 
++	By using these containers, developers can run an application as a single package. 
++	It allows you to ship libraries and other dependencies in one package.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
-
-
+3) Hystrix
++	Hystrix is a fault tolerance java library. This tool is designed to separate points of access 
+	to remote services, systems, and 3rd-party libraries in a distributed environment like Microservices. 
++	It improves overall system by isolating the failing services and preventing the cascading effect of failures.
